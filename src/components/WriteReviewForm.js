@@ -13,6 +13,7 @@ const WriteReviewForm = ({
 }) => {
   const MAX_CHARACTERS = 1000;
   const MIN_CHARACTERS = 20;
+  const [hoveredRating, setHoveredRating] = React.useState(0);
   
   const remainingChars = MAX_CHARACTERS - comment.length;
   const isValidLength = comment.length >= MIN_CHARACTERS && comment.length <= MAX_CHARACTERS;
@@ -28,13 +29,22 @@ const WriteReviewForm = ({
       )}
       <div className="rating-input">
         <label>Rating: </label>
-        <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
-          <option value={5}>5 Stars</option>
-          <option value={4}>4 Stars</option>
-          <option value={3}>3 Stars</option>
-          <option value={2}>2 Stars</option>
-          <option value={1}>1 Star</option>
-        </select>
+        <div className="star-rating">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              type="button"
+              className={`star-button ${star <= (hoveredRating || rating) ? 'star-filled' : 'star-empty'}`}
+              onClick={() => setRating(star)}
+              onMouseEnter={() => setHoveredRating(star)}
+              onMouseLeave={() => setHoveredRating(0)}
+              title={`${star} star${star !== 1 ? 's' : ''}`}
+            >
+              ★
+            </button>
+          ))}
+          <span className="rating-text">({rating} star{rating !== 1 ? 's' : ''})</span>
+        </div>
       </div>
       <div className="comment-input">
         <textarea

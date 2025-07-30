@@ -12,19 +12,85 @@
 }
 
 .rating-input {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .rating-input label {
-  margin-right: 10px;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star-button {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 4px;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+}
+
+.star-button:hover {
+  transform: scale(1.1);
+}
+
+.star-button:focus {
+  outline: none;
+}
+
+.star-filled {
+  color: #ff8c00;
+  text-shadow: 0 0 4px rgba(255, 140, 0, 0.3);
+}
+
+.star-empty {
+  color: #ddd;
+}
+
+.star-empty:hover {
+  color: #ff8c00;
+}
+
+.rating-text {
+  margin-left: 12px;
+  font-size: 14px;
+  color: #666;
   font-weight: 500;
 }
 
-.rating-input select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+/* Star Rating Responsive Design */
+@media (max-width: 768px) {
+  .star-button {
+    font-size: 24px;
+    padding: 2px;
+  }
+  
+  .star-rating {
+    gap: 2px;
+  }
+  
+  .rating-text {
+    margin-left: 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .star-button {
+    font-size: 22px;
+  }
+  
+  .rating-input label {
+    font-size: 14px;
+  }
 }
 
 .review-textarea {
