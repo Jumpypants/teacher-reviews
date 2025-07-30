@@ -1,7 +1,18 @@
 /* Teachers Grid */
+.teachers-grid-header {
+  margin-bottom: 20px;
+}
+
 .teachers-grid h2 {
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+}
+
+.sort-indicator {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0;
+  font-style: italic;
 }
 
 .teacher-card {

@@ -16,28 +16,40 @@ const HomePage = ({
   onNavigateToAdmin,
   onSignOut
 }) => {
-  const [filteredTeachers, setFilteredTeachers] = useState(teachers);
+  const [filteredTeachers, setFilteredTeachers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const { totalPending, pendingTeachersCount, pendingReviewsCount } = usePendingCounts(userRole);
 
+  // Sort teachers by review count (most reviews first)
+  const sortTeachersByReviewCount = (teachersToSort) => {
+    return [...teachersToSort].sort((a, b) => {
+      const aReviewCount = reviews.filter(r => r.teacherId === a.id && r.status === "approved").length;
+      const bReviewCount = reviews.filter(r => r.teacherId === b.id && r.status === "approved").length;
+      return bReviewCount - aReviewCount; // Descending order (most reviews first)
+    });
+  };
+
   // Handle search results
   const handleSearchResults = (results, query) => {
-    setFilteredTeachers(results);
+    const sortedResults = sortTeachersByReviewCount(results);
+    setFilteredTeachers(sortedResults);
     setSearchQuery(query);
   };
 
   // Handle clear search
   const handleClearSearch = () => {
-    setFilteredTeachers(teachers);
+    const sortedTeachers = sortTeachersByReviewCount(teachers);
+    setFilteredTeachers(sortedTeachers);
     setSearchQuery("");
   };
 
   // Update filtered teachers when teachers prop changes
   React.useEffect(() => {
     if (!searchQuery) {
-      setFilteredTeachers(teachers);
+      const sortedTeachers = sortTeachersByReviewCount(teachers);
+      setFilteredTeachers(sortedTeachers);
     }
-  }, [teachers, searchQuery]);
+  }, [teachers, reviews, searchQuery]);
   return (
     <div>
       <Header user={user} userData={userData} />

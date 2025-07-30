@@ -5,7 +5,10 @@ const TeachersGrid = ({ teachers, reviews, user, getAverageRating, onViewTeacher
   // Teachers are already filtered for approved status in useFirestoreData
   return (
     <div className="teachers-grid">
-      <h2>All Teachers</h2>
+      <div className="teachers-grid-header">
+        <h2>All Teachers</h2>
+        <p className="sort-indicator">Sorted by number of reviews</p>
+      </div>
       {teachers.length === 0 ? (
         <p>
           No teachers added yet.{" "}
