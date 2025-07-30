@@ -2,15 +2,14 @@ import React from "react";
 import ReviewCard from "./ReviewCard";
 
 const ReviewsSection = ({ teacherReviews }) => {
-  const approvedReviews = teacherReviews.filter((r) => r.status === "approved");
-
+  // Reviews are already filtered for approved status in useFirestoreData
   return (
     <div className="reviews-section">
       <h3>Reviews</h3>
-      {approvedReviews.length === 0 ? (
+      {teacherReviews.length === 0 ? (
         <p>No reviews yet.</p>
       ) : (
-        approvedReviews.map((review) => (
+        teacherReviews.map((review) => (
           <ReviewCard key={review.id} review={review} />
         ))
       )}

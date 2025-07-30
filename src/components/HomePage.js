@@ -1,36 +1,36 @@
 import React from "react";
 import Header from "./Header";
-import AddTeacherForm from "./AddTeacherForm";
 import TeachersGrid from "./TeachersGrid";
 
 const HomePage = ({
   user,
+  userRole,
   teachers,
   reviews,
-  teacherName,
-  setTeacherName,
-  school,
-  setSchool,
-  subjectsInput,
-  setSubjectsInput,
-  onSubmitTeacher,
   getAverageRating,
-  onViewTeacher
+  onViewTeacher,
+  onNavigateToAddTeacher,
+  onNavigateToAdmin
 }) => {
   return (
     <div>
       <Header user={user} />
 
       {user && (
-        <AddTeacherForm
-          teacherName={teacherName}
-          setTeacherName={setTeacherName}
-          school={school}
-          setSchool={setSchool}
-          subjectsInput={subjectsInput}
-          setSubjectsInput={setSubjectsInput}
-          onSubmitTeacher={onSubmitTeacher}
-        />
+        <div className="add-teacher-top-button">
+          <button onClick={onNavigateToAddTeacher} className="btn-primary">
+            + Add New Teacher
+          </button>
+          {userRole === "admin" && (
+            <button 
+              onClick={onNavigateToAdmin} 
+              className="btn-admin"
+              style={{ marginLeft: "10px" }}
+            >
+              Admin Dashboard
+            </button>
+          )}
+        </div>
       )}
 
       <TeachersGrid

@@ -6,9 +6,10 @@ This React application has been refactored into a clean, modular structure:
 - **AuthPage.js** - Handles user authentication UI
 - **Header.js** - App header with branding and user info
 - **AddTeacherForm.js** - Form for adding new teachers
+- **AddTeacherPage.js** - Dedicated page for adding new teachers
 - **TeacherCard.js** - Individual teacher card display
 - **TeachersGrid.js** - Grid layout for all teachers 
-- **HomePage.js** - Main home page component
+- **HomePage.js** - Main home page component with navigation
 - **WriteReviewForm.js** - Form for submitting reviews
 - **ReviewCard.js** - Individual review display
 - **ReviewsSection.js** - Section containing all reviews
@@ -40,3 +41,4 @@ This React application has been refactored into a clean, modular structure:
 ✅ Real-time data updates  
 ✅ Responsive design  
 ✅ Modular component architecture
+✅ Separate page for adding teachers

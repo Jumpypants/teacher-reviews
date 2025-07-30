@@ -2,6 +2,7 @@ import React from "react";
 import TeacherCard from "./TeacherCard";
 
 const TeachersGrid = ({ teachers, reviews, user, getAverageRating, onViewTeacher }) => {
+  // Teachers are already filtered for approved status in useFirestoreData
   return (
     <div className="teachers-grid">
       <h2>All Teachers</h2>
@@ -14,7 +15,7 @@ const TeachersGrid = ({ teachers, reviews, user, getAverageRating, onViewTeacher
         teachers.map((teacher) => {
           const avgRating = getAverageRating(teacher.id);
           const reviewCount = reviews.filter(
-            (r) => r.teacherId === teacher.id && r.status === "approved"
+            (r) => r.teacherId === teacher.id
           ).length;
 
           return (

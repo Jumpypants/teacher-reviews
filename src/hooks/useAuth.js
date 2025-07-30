@@ -5,12 +5,34 @@ import { auth, db, provider } from "../firebase";
 
 export const useAuth = () => {
   const [user, setUser] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       console.log("Auth state changed:", currentUser);
       setUser(currentUser);
+      
+      if (currentUser) {
+        // Fetch user role from Firestore
+        try {
+          const userDoc = doc(db, "users", currentUser.uid);
+          const docSnap = await getDoc(userDoc);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setUserRole(userData.role || "user");
+            console.log("User role:", userData.role || "user");
+          } else {
+            setUserRole("user");
+          }
+        } catch (error) {
+          console.error("Error fetching user role:", error);
+          setUserRole("user");
+        }
+      } else {
+        setUserRole(null);
+      }
+      
       setLoading(false);
     });
 
@@ -33,5 +55,5 @@ export const useAuth = () => {
     }
   };
 
-  return { user, loading, signIn };
+  return { user, userRole, loading, signIn };
 };

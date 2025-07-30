@@ -1,7 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const submitTeacher = async (teacherName, subjectsInput, school) => {
+export const submitTeacher = async (teacherName, subjectsInput, school, userRole = "user") => {
   if (!teacherName || !subjectsInput || !school) return false;
 
   const subjectsArray = subjectsInput
@@ -9,12 +9,18 @@ export const submitTeacher = async (teacherName, subjectsInput, school) => {
     .map((s) => s.trim())
     .filter(Boolean);
 
+  // Determine status based on user role
+  const status = userRole === "admin" ? "approved" : "pending";
+
   try {
     await addDoc(collection(db, "teachers"), {
       name: teacherName,
       subjects: subjectsArray,
       school: school,
+      status: status,
+      timestamp: new Date(),
     });
+    console.log(`Teacher submitted with status: ${status}`);
     return true;
   } catch (error) {
     console.error("Error submitting teacher:", error);
@@ -22,8 +28,11 @@ export const submitTeacher = async (teacherName, subjectsInput, school) => {
   }
 };
 
-export const postReview = async (user, selectedTeacher, comment, rating) => {
+export const postReview = async (user, selectedTeacher, comment, rating, userRole = "user") => {
   if (!user || !comment || !selectedTeacher) return false;
+
+  // Determine status based on user role
+  const status = userRole === "admin" ? "approved" : "pending";
 
   try {
     await addDoc(collection(db, "reviews"), {
@@ -32,9 +41,10 @@ export const postReview = async (user, selectedTeacher, comment, rating) => {
       teacherId: selectedTeacher.id,
       comment: comment,
       rating: rating,
-      status: "approved", // Auto-approve for now
+      status: status,
       timestamp: new Date(),
     });
+    console.log(`Review submitted with status: ${status}`);
     return true;
   } catch (error) {
     console.error("Error posting review:", error);

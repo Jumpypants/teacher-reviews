@@ -15,14 +15,20 @@ export const useFirestoreData = (user) => {
 
     console.log("Fetching data for authenticated user:", user.email);
 
-    const teachersUnsub = onSnapshot(
+    // Only fetch approved teachers for better performance and security
+    const teachersQuery = query(
       collection(db, "teachers"),
+      where("status", "==", "approved")
+    );
+
+    const teachersUnsub = onSnapshot(
+      teachersQuery,
       (snapshot) => {
         const teachersData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Teachers data from Firebase:", teachersData);
+        console.log("Approved teachers data from Firebase:", teachersData);
         setTeachers(teachersData);
       },
       (error) => {
@@ -30,14 +36,20 @@ export const useFirestoreData = (user) => {
       }
     );
 
-    const reviewsUnsub = onSnapshot(
+    // Only fetch approved reviews for better performance and security
+    const reviewsQuery = query(
       collection(db, "reviews"),
+      where("status", "==", "approved")
+    );
+
+    const reviewsUnsub = onSnapshot(
+      reviewsQuery,
       (snapshot) => {
         const reviewsData = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Reviews data from Firebase:", reviewsData);
+        console.log("Approved reviews data from Firebase:", reviewsData);
         setReviews(reviewsData);
       },
       (error) => {
@@ -54,7 +66,8 @@ export const useFirestoreData = (user) => {
   const fetchTeacherReviews = (teacherId) => {
     const reviewsQuery = query(
       collection(db, "reviews"),
-      where("teacherId", "==", teacherId)
+      where("teacherId", "==", teacherId),
+      where("status", "==", "approved")
     );
 
     const unsub = onSnapshot(reviewsQuery, (snapshot) => {
