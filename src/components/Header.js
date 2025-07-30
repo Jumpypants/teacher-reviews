@@ -5,8 +5,13 @@ const Header = ({ user, userData }) => {
   
   return (
     <header className="header">
-      <h1>SchoolScope</h1>
-      <p>Yelp For Teachers</p>
+      <div className="header-brand">
+        <img src="/MainIcon.png" alt="SchoolScope" className="header-icon" />
+        <div className="header-text">
+          <h1>SchoolScope</h1>
+          <p>Yelp For Teachers</p>
+        </div>
+      </div>
       {user && (
         <div className="user-info">
           Welcome, {displayName}
