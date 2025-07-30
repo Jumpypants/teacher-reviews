@@ -6,7 +6,7 @@ const Header = ({ user, userData }) => {
   return (
     <header className="header">
       <h1>SchoolScope</h1>
-      <p>Find and review teachers</p>
+      <p>Yelp For Teachers</p>
       {user && (
         <div className="user-info">
           Welcome, {displayName}
