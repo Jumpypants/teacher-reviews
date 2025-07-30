@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import TeachersGrid from "./TeachersGrid";
 import SearchBar from "./SearchBar";
+import { usePendingCounts } from "../hooks/usePendingCounts";
 
 const HomePage = ({
   user,
@@ -15,6 +16,7 @@ const HomePage = ({
 }) => {
   const [filteredTeachers, setFilteredTeachers] = useState(teachers);
   const [searchQuery, setSearchQuery] = useState("");
+  const { totalPending, pendingTeachersCount, pendingReviewsCount } = usePendingCounts(userRole);
 
   // Handle search results
   const handleSearchResults = (results, query) => {
@@ -46,10 +48,16 @@ const HomePage = ({
           {userRole === "admin" && (
             <button 
               onClick={onNavigateToAdmin} 
-              className="btn-admin"
+              className="btn-admin admin-button-with-badge"
               style={{ marginLeft: "10px" }}
+              title={totalPending > 0 ? `${pendingTeachersCount} pending teachers, ${pendingReviewsCount} pending reviews` : "Admin Dashboard"}
             >
               Admin Dashboard
+              {totalPending > 0 && (
+                <span className="notification-badge">
+                  {totalPending > 99 ? '99+' : totalPending}
+                </span>
+              )}
             </button>
           )}
         </div>
