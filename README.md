@@ -1,3 +1,26 @@
+# SchoolScope
+
+A React-based teacher review and rating application built with Firebase.
+
+## About SchoolScope
+
+SchoolScope is a Yelp-like platform for reviewing teachers, allowing students and parents to:
+- Browse and search for teachers
+- Read reviews and ratings
+- Submit their own reviews (with admin moderation)
+- View teacher profiles with photos and subject information
+
+## Features
+
+- **User Authentication** - Google OAuth integration
+- **Teacher Profiles** - Complete teacher information with photos
+- **Review System** - Star ratings and detailed comments
+- **Admin Dashboard** - Content moderation and management
+- **Responsive Design** - Works on all devices
+- **Role-Based Access** - Different permissions for users and admins
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

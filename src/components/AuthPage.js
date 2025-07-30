@@ -4,7 +4,7 @@ const AuthPage = ({ onSignIn, loading = false }) => {
   if (loading) {
     return (
       <div className="auth-page">
-        <h1>TeacherReviews</h1>
+        <h1>SchoolScope</h1>
         <p>Loading...</p>
       </div>
     );
@@ -12,7 +12,7 @@ const AuthPage = ({ onSignIn, loading = false }) => {
 
   return (
     <div className="auth-page">
-      <h1>TeacherReviews</h1>
+      <h1>SchoolScope</h1>
       <p>Sign in to view and review teachers</p>
       <button onClick={onSignIn} className="btn-primary">
         Sign in with Google

@@ -1,6 +1,6 @@
 # Styles Directory
 
-This directory contains the modular CSS files for the Teacher Reviews application.
+This directory contains the modular CSS files for the SchoolScope application.
 
 ## File Organization
 

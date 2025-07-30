@@ -1,4 +1,4 @@
-# Project Structure
+# SchoolScope - Project Structure
 
 This React application has been refactored into a clean, modular structure:
 
