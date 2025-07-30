@@ -156,6 +156,95 @@
   min-width: 100px;
 }
 
+/* Confirmation Modal Styles */
+.confirmation-modal {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.confirmation-message {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.confirmation-actions button {
+  min-width: 100px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.confirmation-cancel {
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.confirmation-cancel:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.confirmation-confirm.danger {
+  background-color: #dc3545;
+  color: white;
+  border: 1px solid #dc3545;
+}
+
+.confirmation-confirm.danger:hover {
+  background-color: #c82333;
+  border-color: #bd2130;
+}
+
+.confirmation-confirm.warning {
+  background-color: #ffc107;
+  color: #212529;
+  border: 1px solid #ffc107;
+}
+
+.confirmation-confirm.warning:hover {
+  background-color: #e0a800;
+  border-color: #d39e00;
+}
+
+/* Review Header Right Section */
+.review-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Delete Review Button */
+.delete-review-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  opacity: 0.6;
+  transition: all 0.2s ease;
+}
+
+.delete-review-btn:hover {
+  opacity: 1;
+  background-color: rgba(255, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+.delete-review-btn:active {
+  transform: scale(0.95);
+}
+
 /* Current User Review Responsive Design */
 @media (max-width: 768px) {
   .your-review-badge {
@@ -166,5 +255,19 @@
   
   .current-user-review .review-header {
     margin-top: 18px;
+  }
+
+  .delete-review-btn {
+    font-size: 14px;
+    padding: 2px 4px;
+  }
+
+  .confirmation-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .confirmation-actions button {
+    width: 100%;
   }
 }

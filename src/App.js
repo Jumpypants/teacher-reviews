@@ -141,6 +141,7 @@ export default function App() {
           getAverageRating={getTeacherAverageRating}
           onBackToHome={handleBackToHome}
           getUserReviewForTeacher={getUserReviewForTeacher}
+          refreshTeacherReviews={refreshTeacherReviews}
         />
       )}
     </div>

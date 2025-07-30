@@ -1,7 +1,7 @@
 import React from "react";
 import ReviewCard from "./ReviewCard";
 
-const ReviewsSection = ({ teacherReviews, currentUser }) => {
+const ReviewsSection = ({ teacherReviews, currentUser, userRole, onDeleteReview }) => {
   // Sort reviews to put user's own review first
   const sortedReviews = React.useMemo(() => {
     if (!currentUser) return teacherReviews;
@@ -26,6 +26,8 @@ const ReviewsSection = ({ teacherReviews, currentUser }) => {
             key={review.id} 
             review={review} 
             isCurrentUser={currentUser?.uid === review.reviewerId}
+            userRole={userRole}
+            onDeleteReview={onDeleteReview}
           />
         ))
       )}

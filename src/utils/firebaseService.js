@@ -156,3 +156,16 @@ export const updateTeacher = async (teacherId, teacherName, subjectsInput, schoo
     return false;
   }
 };
+
+export const deleteReview = async (reviewId) => {
+  if (!reviewId) return false;
+
+  try {
+    await deleteDoc(doc(db, "reviews", reviewId));
+    console.log("Review deleted successfully:", reviewId);
+    return true;
+  } catch (error) {
+    console.error("Error deleting review:", error);
+    return false;
+  }
+};

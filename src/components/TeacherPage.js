@@ -4,7 +4,7 @@ import ReviewsSection from "./ReviewsSection";
 import Modal from "./Modal";
 import TeacherAvatar from "./TeacherAvatar";
 import TeacherEditForm from "./TeacherEditForm";
-import { updateTeacher } from "../utils/firebaseService";
+import { updateTeacher, deleteReview } from "../utils/firebaseService";
 
 const TeacherPage = ({
   selectedTeacher,
@@ -20,7 +20,8 @@ const TeacherPage = ({
   onPostReview,
   getAverageRating,
   onBackToHome,
-  getUserReviewForTeacher
+  getUserReviewForTeacher,
+  refreshTeacherReviews
 }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -70,6 +71,17 @@ const TeacherPage = ({
       // Optionally, you could trigger a refresh of the teacher data here
     }
     return success;
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    const success = await deleteReview(reviewId);
+    if (success) {
+      console.log("Review deleted successfully");
+      // Manually refresh the teacher reviews to ensure immediate update
+      setTimeout(() => refreshTeacherReviews(), 200);
+    } else {
+      alert("Failed to delete review. Please try again.");
+    }
   };
 
   // Determine button text and state
@@ -153,7 +165,12 @@ const TeacherPage = ({
           </div>
         )}
 
-        <ReviewsSection teacherReviews={teacherReviews} currentUser={user} />
+        <ReviewsSection 
+          teacherReviews={teacherReviews} 
+          currentUser={user} 
+          userRole={userRole}
+          onDeleteReview={handleDeleteReview}
+        />
       </div>
 
       <Modal
