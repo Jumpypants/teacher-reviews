@@ -10,6 +10,8 @@ const AddTeacherPage = ({
   setSchool,
   subjectsInput,
   setSubjectsInput,
+  photoUrl,
+  setPhotoUrl,
   onSubmitTeacher,
   onBackToHome
 }) => {
@@ -30,6 +32,8 @@ const AddTeacherPage = ({
             setSchool={setSchool}
             subjectsInput={subjectsInput}
             setSubjectsInput={setSubjectsInput}
+            photoUrl={photoUrl}
+            setPhotoUrl={setPhotoUrl}
             onSubmitTeacher={onSubmitTeacher}
           />
         </div>

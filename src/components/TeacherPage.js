@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import WriteReviewForm from "./WriteReviewForm";
 import ReviewsSection from "./ReviewsSection";
 import Modal from "./Modal";
+import TeacherAvatar from "./TeacherAvatar";
 
 const TeacherPage = ({
   selectedTeacher,
@@ -78,19 +79,23 @@ const TeacherPage = ({
 
       <div className="teacher-profile">
         <div className="teacher-header">
-          <h1>{selectedTeacher.name}</h1>
-          <p className="school-name">{selectedTeacher.school}</p>
-          <p className="subjects-list">
-            Subjects: {selectedTeacher.subjects?.join(", ")}
-          </p>
-
-          <div className="rating-summary">
-            <span className="large-rating">
-              ★ {getAverageRating(selectedTeacher.id) || "No ratings"}
-            </span>
-            <span className="review-count">
-              ({teacherReviews.length} reviews)
-            </span>
+          <div className="teacher-header-content">
+            <TeacherAvatar teacher={selectedTeacher} size="large" />
+            <div className="teacher-details">
+              <h1>{selectedTeacher.name}</h1>
+              <p className="school-name">{selectedTeacher.school}</p>
+              <p className="subjects-list">
+                Subjects: {selectedTeacher.subjects?.join(", ")}
+              </p>
+              <div className="rating-summary">
+                <span className="large-rating">
+                  ★ {getAverageRating(selectedTeacher.id) || "No ratings"}
+                </span>
+                <span className="review-count">
+                  ({teacherReviews.length} reviews)
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 

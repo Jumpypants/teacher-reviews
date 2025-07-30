@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot, doc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "../firebase";
+import TeacherAvatar from "./TeacherAvatar";
+import ImageModerationPreview from "./ImageModerationPreview";
 
 const AdminDashboard = ({ user, onBackToHome }) => {
   const [pendingTeachers, setPendingTeachers] = useState([]);
@@ -106,10 +108,27 @@ const AdminDashboard = ({ user, onBackToHome }) => {
         ) : (
           pendingTeachers.map((teacher) => (
             <div key={teacher.id} className="admin-card">
-              <h3>{teacher.name}</h3>
-              <p><strong>School:</strong> {teacher.school}</p>
-              <p><strong>Subjects:</strong> {teacher.subjects?.join(", ")}</p>
-              <p><strong>Submitted:</strong> {teacher.timestamp?.toDate?.()?.toLocaleDateString()}</p>
+              <div className="admin-teacher-content">
+                <div className="teacher-info-section">
+                  <div className="teacher-preview">
+                    <TeacherAvatar teacher={teacher} size="medium" />
+                    <div className="teacher-basic-info">
+                      <h3>{teacher.name}</h3>
+                      <p><strong>School:</strong> {teacher.school}</p>
+                      <p><strong>Subjects:</strong> {teacher.subjects?.join(", ")}</p>
+                      <p><strong>Submitted:</strong> {teacher.timestamp?.toDate?.()?.toLocaleDateString()}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="image-moderation-section">
+                  <ImageModerationPreview 
+                    imageUrl={teacher.photoUrl} 
+                    teacherName={teacher.name}
+                  />
+                </div>
+              </div>
+              
               <div className="admin-actions">
                 <button 
                   onClick={() => approveTeacher(teacher.id)}

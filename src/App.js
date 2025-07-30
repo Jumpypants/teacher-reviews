@@ -32,14 +32,16 @@ export default function App() {
   const [teacherName, setTeacherName] = useState("");
   const [subjectsInput, setSubjectsInput] = useState("");
   const [school, setSchool] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
 
   // Handlers
   const handleSubmitTeacher = async () => {
-    const success = await submitTeacher(teacherName, subjectsInput, school, userRole);
+    const success = await submitTeacher(teacherName, subjectsInput, school, userRole, photoUrl);
     if (success) {
       setTeacherName("");
       setSubjectsInput("");
       setSchool("");
+      setPhotoUrl("");
       // Navigate back to home after successful submission
       setCurrentView("home");
     }
@@ -105,6 +107,8 @@ export default function App() {
           setSchool={setSchool}
           subjectsInput={subjectsInput}
           setSubjectsInput={setSubjectsInput}
+          photoUrl={photoUrl}
+          setPhotoUrl={setPhotoUrl}
           onSubmitTeacher={handleSubmitTeacher}
           onBackToHome={handleBackToHome}
         />

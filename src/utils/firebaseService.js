@@ -1,7 +1,7 @@
 import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const submitTeacher = async (teacherName, subjectsInput, school, userRole = "user") => {
+export const submitTeacher = async (teacherName, subjectsInput, school, userRole = "user", photoUrl = "") => {
   if (!teacherName || !subjectsInput || !school) return false;
 
   const subjectsArray = subjectsInput
@@ -13,13 +13,20 @@ export const submitTeacher = async (teacherName, subjectsInput, school, userRole
   const status = userRole === "admin" ? "approved" : "pending";
 
   try {
-    await addDoc(collection(db, "teachers"), {
+    const teacherData = {
       name: teacherName,
       subjects: subjectsArray,
       school: school,
       status: status,
       timestamp: new Date(),
-    });
+    };
+
+    // Only add photoUrl if it's provided and not empty
+    if (photoUrl && photoUrl.trim()) {
+      teacherData.photoUrl = photoUrl.trim();
+    }
+
+    await addDoc(collection(db, "teachers"), teacherData);
     console.log(`Teacher submitted with status: ${status}`);
     return true;
   } catch (error) {
