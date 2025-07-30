@@ -9,7 +9,7 @@ const Header = ({ user, userData }) => {
         <img src="/MainIcon.png" alt="SchoolScope" className="header-icon" />
         <div className="header-text">
           <h1>SchoolScope</h1>
-          <p>Yelp For Teachers</p>
+          <p>Yelp for Teachers</p>
         </div>
       </div>
       {user && (
