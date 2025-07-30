@@ -18,7 +18,10 @@ const AdminDashboard = ({ user, onBackToHome }) => {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log("Admin Dashboard - Pending teachers fetched:", teachersData);
       setPendingTeachers(teachersData);
+    }, (error) => {
+      console.error("Error fetching pending teachers:", error);
     });
 
     // Fetch pending reviews
@@ -32,7 +35,10 @@ const AdminDashboard = ({ user, onBackToHome }) => {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log("Admin Dashboard - Pending reviews fetched:", reviewsData);
       setPendingReviews(reviewsData);
+    }, (error) => {
+      console.error("Error fetching pending reviews:", error);
     });
 
     return () => {

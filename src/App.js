@@ -11,6 +11,7 @@ import AdminDashboard from "./components/AdminDashboard";
 // Hooks
 import { useAuth } from "./hooks/useAuth";
 import { useFirestoreData } from "./hooks/useFirestoreData";
+import { useUserReviews } from "./hooks/useUserReviews";
 
 // Utils
 import { getAverageRating } from "./utils/ratingUtils";
@@ -19,6 +20,7 @@ import { submitTeacher, postReview } from "./utils/firebaseService";
 export default function App() {
   const { user, userRole, loading, signIn } = useAuth();
   const { teachers, reviews, teacherReviews, fetchTeacherReviews } = useFirestoreData(user);
+  const { getUserReviewForTeacher } = useUserReviews(user);
   
   const [currentView, setCurrentView] = useState("home"); // "home", "addTeacher", "teacher", or "admin"
   const [selectedTeacher, setSelectedTeacher] = useState(null);
@@ -43,11 +45,16 @@ export default function App() {
   };
 
   const handlePostReview = async () => {
-    const success = await postReview(user, selectedTeacher, comment, rating, userRole);
+    // Check if user already has a review for this teacher
+    const existingReview = getUserReviewForTeacher(selectedTeacher.id);
+    const existingReviewId = existingReview ? existingReview.id : null;
+    
+    const success = await postReview(user, selectedTeacher, comment, rating, userRole, existingReviewId);
     if (success) {
       setComment("");
       setRating(5);
     }
+    return success;
   };
 
   const handleViewTeacher = async (teacher) => {
@@ -109,6 +116,7 @@ export default function App() {
           selectedTeacher={selectedTeacher}
           teacherReviews={teacherReviews}
           user={user}
+          userRole={userRole}
           rating={rating}
           setRating={setRating}
           comment={comment}
@@ -116,6 +124,7 @@ export default function App() {
           onPostReview={handlePostReview}
           getAverageRating={getTeacherAverageRating}
           onBackToHome={handleBackToHome}
+          getUserReviewForTeacher={getUserReviewForTeacher}
         />
       )}
     </div>

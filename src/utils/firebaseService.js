@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
 export const submitTeacher = async (teacherName, subjectsInput, school, userRole = "user") => {
@@ -28,13 +28,20 @@ export const submitTeacher = async (teacherName, subjectsInput, school, userRole
   }
 };
 
-export const postReview = async (user, selectedTeacher, comment, rating, userRole = "user") => {
+export const postReview = async (user, selectedTeacher, comment, rating, userRole = "user", existingReviewId = null) => {
   if (!user || !comment || !selectedTeacher) return false;
 
   // Determine status based on user role
   const status = userRole === "admin" ? "approved" : "pending";
 
   try {
+    // If there's an existing review, delete it first
+    if (existingReviewId) {
+      await deleteDoc(doc(db, "reviews", existingReviewId));
+      console.log("Deleted existing review");
+    }
+
+    // Create new review
     await addDoc(collection(db, "reviews"), {
       reviewerId: user.uid,
       reviewerName: user.displayName,
@@ -44,7 +51,7 @@ export const postReview = async (user, selectedTeacher, comment, rating, userRol
       status: status,
       timestamp: new Date(),
     });
-    console.log(`Review submitted with status: ${status}`);
+    console.log(`Review ${existingReviewId ? 'replaced' : 'submitted'} with status: ${status}`);
     return true;
   } catch (error) {
     console.error("Error posting review:", error);

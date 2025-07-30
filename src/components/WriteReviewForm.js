@@ -5,11 +5,19 @@ const WriteReviewForm = ({
   setRating,
   comment,
   setComment,
-  onPostReview
+  onPostReview,
+  onCancel,
+  isEditing = false
 }) => {
   return (
-    <div className="write-review-section">
-      <h3>Write a Review</h3>
+    <div className="write-review-form">
+      {isEditing && (
+        <div className="edit-notice">
+          <p className="edit-notice-text">
+            You are editing your existing review. This will replace your previous review.
+          </p>
+        </div>
+      )}
       <div className="rating-input">
         <label>Rating: </label>
         <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
@@ -26,9 +34,14 @@ const WriteReviewForm = ({
         placeholder="Share your experience with this teacher..."
         className="review-textarea"
       />
-      <button onClick={onPostReview} className="btn-primary">
-        Submit Review
-      </button>
+      <div className="form-actions">
+        <button onClick={onCancel} className="btn-secondary">
+          Cancel
+        </button>
+        <button onClick={onPostReview} className="btn-primary">
+          {isEditing ? "Update Review" : "Submit Review"}
+        </button>
+      </div>
     </div>
   );
 };
