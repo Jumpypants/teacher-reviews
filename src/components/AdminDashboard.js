@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { collection, onSnapshot, doc, updateDoc, query, where } from "firebase/firestore";
 import { db } from "../firebase";
-import TeacherAvatar from "./TeacherAvatar";
 import ImageModerationPreview from "./ImageModerationPreview";
+import Modal from "./Modal";
+import TeacherEditForm from "./TeacherEditForm";
+import { updateTeacher } from "../utils/firebaseService";
 
 const AdminDashboard = ({ user, onBackToHome }) => {
   const [pendingTeachers, setPendingTeachers] = useState([]);
   const [pendingReviews, setPendingReviews] = useState([]);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [teacherToEdit, setTeacherToEdit] = useState(null);
 
   useEffect(() => {
     // Fetch pending teachers
@@ -93,6 +97,36 @@ const AdminDashboard = ({ user, onBackToHome }) => {
     }
   };
 
+  const approveWithEdits = async (teacher) => {
+    // First approve the teacher
+    try {
+      await updateDoc(doc(db, "teachers", teacher.id), {
+        status: "approved"
+      });
+      console.log("Teacher approved");
+      
+      // Then open the edit modal
+      setTeacherToEdit(teacher);
+      setIsEditModalOpen(true);
+    } catch (error) {
+      console.error("Error approving teacher:", error);
+    }
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setTeacherToEdit(null);
+  };
+
+  const handleSaveTeacher = async (teacherId, name, subjects, school, photoUrl) => {
+    const success = await updateTeacher(teacherId, name, subjects, school, photoUrl);
+    if (success) {
+      setIsEditModalOpen(false);
+      setTeacherToEdit(null);
+    }
+    return success;
+  };
+
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
       <button onClick={onBackToHome} className="back-button">
@@ -110,14 +144,11 @@ const AdminDashboard = ({ user, onBackToHome }) => {
             <div key={teacher.id} className="admin-card">
               <div className="admin-teacher-content">
                 <div className="teacher-info-section">
-                  <div className="teacher-preview">
-                    <TeacherAvatar teacher={teacher} size="medium" />
-                    <div className="teacher-basic-info">
-                      <h3>{teacher.name}</h3>
-                      <p><strong>School:</strong> {teacher.school}</p>
-                      <p><strong>Subjects:</strong> {teacher.subjects?.join(", ")}</p>
-                      <p><strong>Submitted:</strong> {teacher.timestamp?.toDate?.()?.toLocaleDateString()}</p>
-                    </div>
+                  <div className="teacher-basic-info">
+                    <h3>{teacher.name}</h3>
+                    <p><strong>School:</strong> {teacher.school}</p>
+                    <p><strong>Subjects:</strong> {teacher.subjects?.join(", ")}</p>
+                    <p><strong>Submitted:</strong> {teacher.timestamp?.toDate?.()?.toLocaleDateString()}</p>
                   </div>
                 </div>
                 
@@ -135,6 +166,12 @@ const AdminDashboard = ({ user, onBackToHome }) => {
                   className="btn-approve"
                 >
                   Approve
+                </button>
+                <button 
+                  onClick={() => approveWithEdits(teacher)}
+                  className="btn-approve-edit"
+                >
+                  Approve with Edits
                 </button>
                 <button 
                   onClick={() => rejectTeacher(teacher.id)}
@@ -183,6 +220,20 @@ const AdminDashboard = ({ user, onBackToHome }) => {
           ))
         )}
       </div>
+
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        title="Edit Teacher Information"
+      >
+        {teacherToEdit && (
+          <TeacherEditForm
+            teacher={teacherToEdit}
+            onSave={handleSaveTeacher}
+            onCancel={handleCloseEditModal}
+          />
+        )}
+      </Modal>
     </div>
   );
 };

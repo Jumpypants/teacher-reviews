@@ -56,6 +56,22 @@
   background-color: #229954;
 }
 
+.btn-approve-edit {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-approve-edit:hover {
+  background-color: #2980b9;
+}
+
 .btn-reject {
   background-color: #e74c3c;
   color: white;
@@ -81,12 +97,6 @@
 
 .teacher-info-section {
   flex: 1;
-}
-
-.teacher-preview {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
 }
 
 .teacher-basic-info h3 {
