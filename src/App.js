@@ -18,7 +18,7 @@ import { getAverageRating } from "./utils/ratingUtils";
 import { submitTeacher, postReview } from "./utils/firebaseService";
 
 export default function App() {
-  const { user, userRole, loading, signIn, signOut } = useAuth();
+  const { user, userRole, userData, loading, signIn, signOut } = useAuth();
   const { teachers, reviews, teacherReviews, fetchTeacherReviews, refreshTeacherReviews } = useFirestoreData(user);
   const { getUserReviewForTeacher } = useUserReviews(user);
   
@@ -99,6 +99,7 @@ export default function App() {
         <HomePage
           user={user}
           userRole={userRole}
+          userData={userData}
           teachers={teachers}
           reviews={reviews}
           getAverageRating={getTeacherAverageRating}

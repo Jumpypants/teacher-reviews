@@ -6,6 +6,7 @@ import { auth, db, provider } from "../firebase";
 export const useAuth = () => {
   const [user, setUser] = useState(null);
   const [userRole, setUserRole] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,23 +15,27 @@ export const useAuth = () => {
       setUser(currentUser);
       
       if (currentUser) {
-        // Fetch user role from Firestore
+        // Fetch user data from Firestore
         try {
           const userDoc = doc(db, "users", currentUser.uid);
           const docSnap = await getDoc(userDoc);
           if (docSnap.exists()) {
-            const userData = docSnap.data();
-            setUserRole(userData.role || "user");
-            console.log("User role:", userData.role || "user");
+            const firestoreUserData = docSnap.data();
+            setUserRole(firestoreUserData.role || "user");
+            setUserData(firestoreUserData);
+            console.log("User data:", firestoreUserData);
           } else {
             setUserRole("user");
+            setUserData(null);
           }
         } catch (error) {
-          console.error("Error fetching user role:", error);
+          console.error("Error fetching user data:", error);
           setUserRole("user");
+          setUserData(null);
         }
       } else {
         setUserRole(null);
+        setUserData(null);
       }
       
       setLoading(false);
@@ -47,8 +52,41 @@ export const useAuth = () => {
       const userDoc = doc(db, "users", result.user.uid);
       const docSnap = await getDoc(userDoc);
       if (!docSnap.exists()) {
-        await setDoc(userDoc, { role: "user" });
-        console.log("Created new user document");
+        // Create new user document
+        const newUserData = { 
+          role: "user",
+          name: result.user.displayName || "Anonymous User",
+          email: result.user.email || "",
+          photoURL: result.user.photoURL || "",
+          createdAt: new Date().toISOString()
+        };
+        await setDoc(userDoc, newUserData);
+        console.log("Created new user document with name:", result.user.displayName);
+        
+        // Set the user data immediately
+        setUserRole("user");
+        setUserData(newUserData);
+      } else {
+        // Check if existing user is missing name or other fields
+        const existingData = docSnap.data();
+        const needsUpdate = !existingData.name || !existingData.email || !existingData.photoURL;
+        
+        if (needsUpdate) {
+          const updatedUserData = {
+            ...existingData,
+            name: existingData.name || result.user.displayName || "Anonymous User",
+            email: existingData.email || result.user.email || "",
+            photoURL: existingData.photoURL || result.user.photoURL || "",
+            updatedAt: new Date().toISOString()
+          };
+          
+          await setDoc(userDoc, updatedUserData, { merge: true });
+          console.log("Updated existing user document with missing fields");
+          
+          // Set the updated user data immediately
+          setUserRole(updatedUserData.role || "user");
+          setUserData(updatedUserData);
+        }
       }
     } catch (error) {
       console.error("Sign-in error:", error);
@@ -64,5 +102,5 @@ export const useAuth = () => {
     }
   };
 
-  return { user, userRole, loading, signIn, signOut: handleSignOut };
+  return { user, userRole, userData, loading, signIn, signOut: handleSignOut };
 };

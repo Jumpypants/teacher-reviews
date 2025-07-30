@@ -7,6 +7,7 @@ import { usePendingCounts } from "../hooks/usePendingCounts";
 const HomePage = ({
   user,
   userRole,
+  userData,
   teachers,
   reviews,
   getAverageRating,
@@ -39,7 +40,7 @@ const HomePage = ({
   }, [teachers, searchQuery]);
   return (
     <div>
-      <Header user={user} />
+      <Header user={user} userData={userData} />
 
       {user && (
         <div className="add-teacher-top-button">
