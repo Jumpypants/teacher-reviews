@@ -1,0 +1,55 @@
+/* Add Teacher Top Button */
+.add-teacher-top-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.add-teacher-top-button .btn-primary {
+  box-shadow: 0 2px 8px rgba(211, 35, 35, 0.3);
+  font-size: 14px;
+  padding: 10px 16px;
+}
+
+/* Add Teacher Navigation Section */
+.add-teacher-nav-section {
+  text-align: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 20px;
+}
+
+/* Add Teacher Section */
+.add-teacher-section {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.add-teacher-section h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+/* Photo URL Input Hint */
+.photo-hint {
+  margin: 8px 0 20px 0;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .add-teacher-top-button {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .add-teacher-top-button .btn-primary {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+}

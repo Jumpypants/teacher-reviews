@@ -1,0 +1,12 @@
+/* Main styles file - imports all modular styles */
+@import './base.css';
+@import './auth.css';
+@import './header.css';
+@import './add-teacher.css';
+@import './teacher-avatar.css';
+@import './teachers-grid.css';
+@import './teacher-page.css';
+@import './modal.css';
+@import './write-review.css';
+@import './reviews.css';
+@import './admin.css';

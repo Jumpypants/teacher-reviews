@@ -1,0 +1,170 @@
+/* Reviews Section */
+.reviews-section h3 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.review-card {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.reviewer-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.review-rating {
+  color: #ff8c00;
+  font-weight: bold;
+}
+
+.review-comment {
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Reviewer Info Styles */
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.anonymous-indicator {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Anonymous Badge Styles */
+.anonymous-badge {
+  margin: 8px 0;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #6c757d;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Current User Review Styles */
+.current-user-review {
+  border: 2px solid #d32323;
+  background: linear-gradient(135deg, #fff9f9 0%, #ffffff 100%);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+}
+
+.your-review-indicator {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  z-index: 1;
+}
+
+.your-review-badge {
+  background: linear-gradient(135deg, #d32323 0%, #e74c3c 100%);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 0 6px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(211, 35, 35, 0.3);
+}
+
+.current-user-review .review-header {
+  margin-top: 20px;
+}
+
+/* Subtle animation for current user review */
+.current-user-review {
+  animation: subtle-pulse 2s ease-in-out;
+}
+
+@keyframes subtle-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(211, 35, 35, 0.2);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+  }
+}
+
+/* Review Status Styles */
+.review-status-message {
+  margin-top: 10px;
+  color: #666;
+  font-style: italic;
+  text-align: center;
+}
+
+.edit-notice {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.edit-notice-text {
+  margin: 0;
+  color: #856404;
+  font-size: 14px;
+}
+
+/* Confirmation Dialog Styles */
+.confirmation-dialog {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.confirmation-message {
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.confirmation-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.confirmation-actions button {
+  min-width: 100px;
+}
+
+/* Current User Review Responsive Design */
+@media (max-width: 768px) {
+  .your-review-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    letter-spacing: 0.3px;
+  }
+  
+  .current-user-review .review-header {
+    margin-top: 18px;
+  }
+}

@@ -1,0 +1,71 @@
+/* Teacher Profile */
+.teacher-profile {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.teacher-header {
+  text-align: center;
+  padding: 40px 0;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 30px;
+}
+
+.teacher-header h1 {
+  color: #333;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.school-name {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.subjects-list {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.rating-summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.large-rating {
+  color: #ff8c00;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Updated Teacher Page Layout */
+.teacher-header-content {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.teacher-details {
+  flex: 1;
+}
+
+.teacher-details h1 {
+  margin: 0 0 10px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teacher-header h1 {
+    font-size: 2rem;
+  }
+  
+  .teacher-header-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+}

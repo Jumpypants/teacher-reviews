@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import "./styles/index.css";
 
 // Components
 import AuthPage from "./components/AuthPage";
