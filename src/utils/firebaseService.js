@@ -28,11 +28,14 @@ export const submitTeacher = async (teacherName, subjectsInput, school, userRole
   }
 };
 
-export const postReview = async (user, selectedTeacher, comment, rating, userRole = "user", existingReviewId = null) => {
+export const postReview = async (user, selectedTeacher, comment, rating, userRole = "user", existingReviewId = null, isAnonymous = false) => {
   if (!user || !comment || !selectedTeacher) return false;
 
   // Determine status based on user role
   const status = userRole === "admin" ? "approved" : "pending";
+  
+  // Use anonymous name if requested
+  const displayName = isAnonymous ? "Anonymous" : user.displayName;
 
   try {
     // If there's an existing review, delete it first
@@ -44,7 +47,8 @@ export const postReview = async (user, selectedTeacher, comment, rating, userRol
     // Create new review
     await addDoc(collection(db, "reviews"), {
       reviewerId: user.uid,
-      reviewerName: user.displayName,
+      reviewerName: displayName,
+      isAnonymous: isAnonymous,
       teacherId: selectedTeacher.id,
       comment: comment,
       rating: rating,

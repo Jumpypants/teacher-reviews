@@ -28,6 +28,7 @@ export default function App() {
   // Form states
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
+  const [isAnonymous, setIsAnonymous] = useState(false);
   const [teacherName, setTeacherName] = useState("");
   const [subjectsInput, setSubjectsInput] = useState("");
   const [school, setSchool] = useState("");
@@ -49,10 +50,11 @@ export default function App() {
     const existingReview = getUserReviewForTeacher(selectedTeacher.id);
     const existingReviewId = existingReview ? existingReview.id : null;
     
-    const success = await postReview(user, selectedTeacher, comment, rating, userRole, existingReviewId);
+    const success = await postReview(user, selectedTeacher, comment, rating, userRole, existingReviewId, isAnonymous);
     if (success) {
       setComment("");
       setRating(5);
+      setIsAnonymous(false);
     }
     return success;
   };
@@ -121,6 +123,8 @@ export default function App() {
           setRating={setRating}
           comment={comment}
           setComment={setComment}
+          isAnonymous={isAnonymous}
+          setIsAnonymous={setIsAnonymous}
           onPostReview={handlePostReview}
           getAverageRating={getTeacherAverageRating}
           onBackToHome={handleBackToHome}

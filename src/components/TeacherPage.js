@@ -12,6 +12,8 @@ const TeacherPage = ({
   setRating,
   comment,
   setComment,
+  isAnonymous,
+  setIsAnonymous,
   onPostReview,
   getAverageRating,
   onBackToHome,
@@ -27,6 +29,7 @@ const TeacherPage = ({
     if (existingUserReview) {
       setComment(existingUserReview.comment);
       setRating(existingUserReview.rating);
+      setIsAnonymous(existingUserReview.isAnonymous || false);
     }
     setIsReviewModalOpen(true);
   };
@@ -36,6 +39,7 @@ const TeacherPage = ({
     if (!existingUserReview) {
       setComment("");
       setRating(5);
+      setIsAnonymous(false);
     }
     setIsReviewModalOpen(false);
   };
@@ -107,7 +111,7 @@ const TeacherPage = ({
           </div>
         )}
 
-        <ReviewsSection teacherReviews={teacherReviews} />
+        <ReviewsSection teacherReviews={teacherReviews} currentUser={user} />
       </div>
 
       <Modal
@@ -120,6 +124,8 @@ const TeacherPage = ({
           setRating={setRating}
           comment={comment}
           setComment={setComment}
+          isAnonymous={isAnonymous}
+          setIsAnonymous={setIsAnonymous}
           onPostReview={handleSubmitReview}
           onCancel={handleCloseReviewModal}
           isEditing={!!existingUserReview}

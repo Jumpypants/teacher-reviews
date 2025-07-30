@@ -137,6 +137,11 @@ const AdminDashboard = ({ user, onBackToHome }) => {
           pendingReviews.map((review) => (
             <div key={review.id} className="admin-card">
               <h4>Review by {review.reviewerName}</h4>
+              {review.isAnonymous && (
+                <p className="anonymous-badge">
+                  <span className="badge">Anonymous Review</span>
+                </p>
+              )}
               <p><strong>Rating:</strong> {review.rating}/5 stars</p>
               <p><strong>Comment:</strong> {review.comment}</p>
               <p><strong>Teacher ID:</strong> {review.teacherId}</p>

@@ -7,7 +7,9 @@ const WriteReviewForm = ({
   setComment,
   onPostReview,
   onCancel,
-  isEditing = false
+  isEditing = false,
+  isAnonymous = false,
+  setIsAnonymous
 }) => {
   return (
     <div className="write-review-form">
@@ -34,6 +36,20 @@ const WriteReviewForm = ({
         placeholder="Share your experience with this teacher..."
         className="review-textarea"
       />
+      <div className="anonymous-option">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            checked={isAnonymous}
+            onChange={(e) => setIsAnonymous(e.target.checked)}
+            className="anonymous-checkbox"
+          />
+          Post anonymously
+        </label>
+        <p className="anonymous-hint">
+          Your review will be shown as "Anonymous" instead of your name
+        </p>
+      </div>
       <div className="form-actions">
         <button onClick={onCancel} className="btn-secondary">
           Cancel

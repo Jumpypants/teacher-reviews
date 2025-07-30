@@ -333,6 +333,18 @@
   margin: 0;
 }
 
+/* Reviewer Info Styles */
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.anonymous-indicator {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
 /* Modal Styles */
 .modal-backdrop {
   position: fixed;
@@ -564,6 +576,114 @@
 
 .confirmation-actions button {
   min-width: 100px;
+}
+
+/* Anonymous Option Styles */
+.anonymous-option {
+  margin: 20px 0;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.anonymous-checkbox {
+  margin-right: 10px;
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.anonymous-hint {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Anonymous Badge Styles */
+.anonymous-badge {
+  margin: 8px 0;
+}
+
+.badge {
+  display: inline-block;
+  background-color: #6c757d;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Current User Review Styles */
+.current-user-review {
+  border: 2px solid #d32323;
+  background: linear-gradient(135deg, #fff9f9 0%, #ffffff 100%);
+  position: relative;
+  box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+}
+
+.your-review-indicator {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  z-index: 1;
+}
+
+.your-review-badge {
+  background: linear-gradient(135deg, #d32323 0%, #e74c3c 100%);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 0 6px 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(211, 35, 35, 0.3);
+}
+
+.current-user-review .review-header {
+  margin-top: 20px;
+}
+
+/* Subtle animation for current user review */
+.current-user-review {
+  animation: subtle-pulse 2s ease-in-out;
+}
+
+@keyframes subtle-pulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(211, 35, 35, 0.2);
+  }
+  100% {
+    box-shadow: 0 2px 8px rgba(211, 35, 35, 0.1);
+  }
+}
+
+/* Current User Review Responsive Design */
+@media (max-width: 768px) {
+  .your-review-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    letter-spacing: 0.3px;
+  }
+  
+  .current-user-review .review-header {
+    margin-top: 18px;
+  }
 }
 
 /* Responsive Design */
