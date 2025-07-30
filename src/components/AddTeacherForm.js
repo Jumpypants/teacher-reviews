@@ -45,8 +45,9 @@ const AddTeacherForm = ({
         💡 Tip: You can use a link from Google Drive, LinkedIn, or any public image URL
       </p>
       <button onClick={onSubmitTeacher} className="btn-primary">
-        Add Teacher
+        Request To Add Teacher
       </button>
+
     </div>
   );
 };
