@@ -11,8 +11,8 @@ const WriteReviewForm = ({
   isAnonymous = false,
   setIsAnonymous
 }) => {
-  const MAX_CHARACTERS = 500;
-  const MIN_CHARACTERS = 10;
+  const MAX_CHARACTERS = 1000;
+  const MIN_CHARACTERS = 20;
   
   const remainingChars = MAX_CHARACTERS - comment.length;
   const isValidLength = comment.length >= MIN_CHARACTERS && comment.length <= MAX_CHARACTERS;
