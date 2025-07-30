@@ -4,7 +4,7 @@ const Header = ({ user }) => {
   return (
     <header className="header">
       <h1>SchoolScope</h1>
-      <p>Find and review the best teachers</p>
+      <p>Find and review teachers</p>
       {user && (
         <div className="user-info">
           Welcome, {user.displayName}
