@@ -1,22 +1,13 @@
 import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { capitalizeWords, sanitizeInput, isValidImageUrl } from "./textUtils";
 
 export const submitTeacher = async (teacherName, subjectsInput, school, userRole = "user", photoUrl = "") => {
   if (!teacherName || !subjectsInput || !school) return false;
 
-  // Input sanitization
-  const sanitizeInput = (input) => {
-    return input.trim().replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-  };
-
-  const isValidImageUrl = (url) => {
-    if (!url) return true; // Empty URL is allowed
-    return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-  };
-
-  // Sanitize inputs
-  const cleanName = sanitizeInput(teacherName);
-  const cleanSchool = sanitizeInput(school);  
+  // Sanitize and capitalize inputs
+  const cleanName = capitalizeWords(sanitizeInput(teacherName));
+  const cleanSchool = capitalizeWords(sanitizeInput(school));  
   const cleanPhotoUrl = photoUrl.trim();
 
   // Validate photo URL
@@ -27,7 +18,7 @@ export const submitTeacher = async (teacherName, subjectsInput, school, userRole
 
   const subjectsArray = subjectsInput
     .split(",")
-    .map((s) => sanitizeInput(s))
+    .map((s) => capitalizeWords(sanitizeInput(s)))
     .filter(Boolean);
 
   // Determine status based on user role
@@ -105,19 +96,9 @@ export const postReview = async (user, selectedTeacher, comment, rating, userRol
 export const updateTeacher = async (teacherId, teacherName, subjectsInput, school, photoUrl = "") => {
   if (!teacherId || !teacherName || !subjectsInput || !school) return false;
 
-  // Input sanitization
-  const sanitizeInput = (input) => {
-    return input.trim().replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-  };
-
-  const isValidImageUrl = (url) => {
-    if (!url) return true; // Empty URL is allowed
-    return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-  };
-
-  // Sanitize inputs
-  const cleanName = sanitizeInput(teacherName);
-  const cleanSchool = sanitizeInput(school);
+  // Sanitize and capitalize inputs
+  const cleanName = capitalizeWords(sanitizeInput(teacherName));
+  const cleanSchool = capitalizeWords(sanitizeInput(school));
   const cleanPhotoUrl = photoUrl.trim();
 
   // Validate photo URL
@@ -128,7 +109,7 @@ export const updateTeacher = async (teacherId, teacherName, subjectsInput, schoo
 
   const subjectsArray = subjectsInput
     .split(",")
-    .map((s) => sanitizeInput(s))
+    .map((s) => capitalizeWords(sanitizeInput(s)))
     .filter(Boolean);
 
   try {
