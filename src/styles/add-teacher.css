@@ -1,15 +1,26 @@
-/* Add Teacher Top Button */
-.add-teacher-top-button {
+/* Add Teacher Left Button */
+.add-teacher-left-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+}
+
+.add-teacher-left-button .btn-primary {
+  box-shadow: 0 2px 8px rgba(211, 35, 35, 0.3);
+  font-size: 14px;
+  padding: 10px 16px;
+}
+
+/* Top Right Buttons Container */
+.top-right-buttons {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 100;
-}
-
-.add-teacher-top-button .btn-primary {
-  box-shadow: 0 2px 8px rgba(211, 35, 35, 0.3);
-  font-size: 14px;
-  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Add Teacher Navigation Section */
@@ -43,13 +54,34 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .add-teacher-top-button {
+  .add-teacher-left-button {
     top: 10px;
-    right: 10px;
+    left: 10px;
   }
   
-  .add-teacher-top-button .btn-primary {
+  .add-teacher-left-button .btn-primary {
     font-size: 12px;
     padding: 8px 12px;
+  }
+  
+  .top-right-buttons {
+    top: 10px;
+    right: 10px;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-teacher-left-button .btn-primary,
+  .top-right-buttons .btn-secondary,
+  .top-right-buttons .btn-admin {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+  
+  .top-right-buttons {
+    gap: 6px;
   }
 }

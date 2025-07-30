@@ -55,33 +55,36 @@ const HomePage = ({
       <Header user={user} userData={userData} />
 
       {user && (
-        <div className="add-teacher-top-button">
-          <button onClick={onNavigateToAddTeacher} className="btn-primary">
-            + Add New Teacher
-          </button>
-          {userRole === "admin" && (
-            <button 
-              onClick={onNavigateToAdmin} 
-              className="btn-admin admin-button-with-badge"
-              style={{ marginLeft: "10px" }}
-              title={totalPending > 0 ? `${pendingTeachersCount} pending teachers, ${pendingReviewsCount} pending reviews` : "Admin Dashboard"}
-            >
-              Admin Dashboard
-              {totalPending > 0 && (
-                <span className="notification-badge">
-                  {totalPending > 99 ? '99+' : totalPending}
-                </span>
-              )}
+        <>
+          <div className="add-teacher-left-button">
+            <button onClick={onNavigateToAddTeacher} className="btn-primary">
+              + Add New Teacher
             </button>
-          )}
-          <button 
-            onClick={onSignOut} 
-            className="btn-secondary"
-            style={{ marginLeft: "10px" }}
-          >
-            Sign Out
-          </button>
-        </div>
+          </div>
+          <div className="top-right-buttons">
+            {userRole === "admin" && (
+              <button 
+                onClick={onNavigateToAdmin} 
+                className="btn-admin admin-button-with-badge"
+                title={totalPending > 0 ? `${pendingTeachersCount} pending teachers, ${pendingReviewsCount} pending reviews` : "Admin Dashboard"}
+              >
+                Admin Dashboard
+                {totalPending > 0 && (
+                  <span className="notification-badge">
+                    {totalPending > 99 ? '99+' : totalPending}
+                  </span>
+                )}
+              </button>
+            )}
+            <button 
+              onClick={onSignOut} 
+              className="btn-secondary"
+              style={{ marginLeft: userRole === "admin" ? "10px" : "0" }}
+            >
+              Sign Out
+            </button>
+          </div>
+        </>
       )}
 
       <SearchBar
