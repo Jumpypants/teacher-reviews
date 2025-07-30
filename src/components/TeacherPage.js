@@ -3,6 +3,8 @@ import WriteReviewForm from "./WriteReviewForm";
 import ReviewsSection from "./ReviewsSection";
 import Modal from "./Modal";
 import TeacherAvatar from "./TeacherAvatar";
+import TeacherEditForm from "./TeacherEditForm";
+import { updateTeacher } from "../utils/firebaseService";
 
 const TeacherPage = ({
   selectedTeacher,
@@ -21,6 +23,7 @@ const TeacherPage = ({
   getUserReviewForTeacher
 }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Get user's existing review for this teacher
   const existingUserReview = user ? getUserReviewForTeacher(selectedTeacher.id) : null;
@@ -50,6 +53,23 @@ const TeacherPage = ({
     if (success) {
       setIsReviewModalOpen(false);
     }
+  };
+
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleSaveTeacher = async (teacherId, name, subjects, school, photoUrl) => {
+    const success = await updateTeacher(teacherId, name, subjects, school, photoUrl);
+    if (success) {
+      setIsEditModalOpen(false);
+      // Optionally, you could trigger a refresh of the teacher data here
+    }
+    return success;
   };
 
   // Determine button text and state
@@ -95,6 +115,16 @@ const TeacherPage = ({
                   ({teacherReviews.length} reviews)
                 </span>
               </div>
+              {userRole === "admin" && (
+                <div className="admin-edit-section">
+                  <button 
+                    onClick={handleOpenEditModal}
+                    className="btn-admin"
+                  >
+                    Edit Teacher Info
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -134,6 +164,18 @@ const TeacherPage = ({
           onPostReview={handleSubmitReview}
           onCancel={handleCloseReviewModal}
           isEditing={!!existingUserReview}
+        />
+      </Modal>
+
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseEditModal}
+        title="Edit Teacher Information"
+      >
+        <TeacherEditForm
+          teacher={selectedTeacher}
+          onSave={handleSaveTeacher}
+          onCancel={handleCloseEditModal}
         />
       </Modal>
     </div>

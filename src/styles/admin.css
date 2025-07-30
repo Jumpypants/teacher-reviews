@@ -206,6 +206,64 @@
   font-style: italic;
 }
 
+/* Admin Edit Section */
+.admin-edit-section {
+  margin-top: 15px;
+}
+
+.admin-edit-section .btn-admin {
+  font-size: 14px;
+  padding: 8px 16px;
+}
+
+/* Teacher Edit Form Styles */
+.teacher-edit-form {
+  background-color: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px 0;
+}
+
+.teacher-edit-form .form-group {
+  margin-bottom: 15px;
+}
+
+.teacher-edit-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.teacher-edit-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.teacher-edit-form input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.teacher-edit-form .form-help {
+  display: block;
+  margin-top: 5px;
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.teacher-edit-form .form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
 /* Responsive design for enhanced admin moderation */
 @media (max-width: 768px) {
   .admin-teacher-content {
@@ -221,5 +279,20 @@
   .preview-image.expanded {
     max-width: 150px;
     height: 150px;
+  }
+  
+  .teacher-edit-form {
+    padding: 15px;
+    margin: 5px 0;
+  }
+  
+  .teacher-edit-form .form-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .teacher-edit-form .btn-primary,
+  .teacher-edit-form .btn-secondary {
+    width: 100%;
   }
 }
