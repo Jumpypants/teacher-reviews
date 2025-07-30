@@ -11,6 +11,12 @@ const WriteReviewForm = ({
   isAnonymous = false,
   setIsAnonymous
 }) => {
+  const MAX_CHARACTERS = 500;
+  const MIN_CHARACTERS = 10;
+  
+  const remainingChars = MAX_CHARACTERS - comment.length;
+  const isValidLength = comment.length >= MIN_CHARACTERS && comment.length <= MAX_CHARACTERS;
+  const isSubmitDisabled = !isValidLength;
   return (
     <div className="write-review-form">
       {isEditing && (
@@ -30,12 +36,25 @@ const WriteReviewForm = ({
           <option value={1}>1 Star</option>
         </select>
       </div>
-      <textarea
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        placeholder="Share your experience with this teacher..."
-        className="review-textarea"
-      />
+      <div className="comment-input">
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Share your experience with this teacher..."
+          className="review-textarea"
+          maxLength={MAX_CHARACTERS}
+        />
+        <div className="character-info">
+          <span className={`character-count ${remainingChars < 50 ? 'warning' : ''}`}>
+            {comment.length}/{MAX_CHARACTERS} characters
+          </span>
+          {comment.length < MIN_CHARACTERS && (
+            <span className="validation-message">
+              Minimum {MIN_CHARACTERS} characters required
+            </span>
+          )}
+        </div>
+      </div>
       <div className="anonymous-option">
         <label className="checkbox-label">
           <input
@@ -54,7 +73,11 @@ const WriteReviewForm = ({
         <button onClick={onCancel} className="btn-secondary">
           Cancel
         </button>
-        <button onClick={onPostReview} className="btn-primary">
+        <button 
+          onClick={onPostReview} 
+          className={`btn-primary ${isSubmitDisabled ? 'disabled' : ''}`}
+          disabled={isSubmitDisabled}
+        >
           {isEditing ? "Update Review" : "Submit Review"}
         </button>
       </div>
