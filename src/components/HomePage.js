@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Header from "./Header";
 import TeachersGrid from "./TeachersGrid";
 import SearchBar from "./SearchBar";
@@ -21,13 +21,13 @@ const HomePage = ({
   const { totalPending, pendingTeachersCount, pendingReviewsCount } = usePendingCounts(userRole);
 
   // Sort teachers by review count (most reviews first)
-  const sortTeachersByReviewCount = (teachersToSort) => {
+  const sortTeachersByReviewCount = useCallback((teachersToSort) => {
     return [...teachersToSort].sort((a, b) => {
       const aReviewCount = reviews.filter(r => r.teacherId === a.id && r.status === "approved").length;
       const bReviewCount = reviews.filter(r => r.teacherId === b.id && r.status === "approved").length;
       return bReviewCount - aReviewCount; // Descending order (most reviews first)
     });
-  };
+  }, [reviews]);
 
   // Handle search results
   const handleSearchResults = (results, query) => {
@@ -49,7 +49,7 @@ const HomePage = ({
       const sortedTeachers = sortTeachersByReviewCount(teachers);
       setFilteredTeachers(sortedTeachers);
     }
-  }, [teachers, reviews, searchQuery]);
+  }, [teachers, searchQuery, sortTeachersByReviewCount]);
   return (
     <div>
       <Header user={user} userData={userData} />
