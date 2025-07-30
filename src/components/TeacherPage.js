@@ -80,9 +80,8 @@ const TeacherPage = ({
     
     switch (existingUserReview.status) {
       case "approved":
-        return { text: "Edit Your Review", disabled: false };
       case "pending":
-        return { text: "Review Pending Approval", disabled: true };
+        return { text: "Edit Your Review", disabled: false };
       case "rejected":
         return { text: "Rewrite Your Review", disabled: false };
       default:
@@ -148,7 +147,7 @@ const TeacherPage = ({
             </button>
             {existingUserReview && existingUserReview.status === "pending" && (
               <p className="review-status-message">
-                Your review is waiting for admin approval
+                Your review is waiting to be approved to affect the teacher's rating.
               </p>
             )}
           </div>

@@ -19,7 +19,7 @@ import { submitTeacher, postReview } from "./utils/firebaseService";
 
 export default function App() {
   const { user, userRole, loading, signIn } = useAuth();
-  const { teachers, reviews, teacherReviews, fetchTeacherReviews } = useFirestoreData(user);
+  const { teachers, reviews, teacherReviews, fetchTeacherReviews, refreshTeacherReviews } = useFirestoreData(user);
   const { getUserReviewForTeacher } = useUserReviews(user);
   
   const [currentView, setCurrentView] = useState("home"); // "home", "addTeacher", "teacher", or "admin"
@@ -48,15 +48,20 @@ export default function App() {
   };
 
   const handlePostReview = async () => {
+    console.log("Posting review for teacher:", selectedTeacher?.id, selectedTeacher?.name);
+    
     // Check if user already has a review for this teacher
     const existingReview = getUserReviewForTeacher(selectedTeacher.id);
     const existingReviewId = existingReview ? existingReview.id : null;
     
     const success = await postReview(user, selectedTeacher, comment, rating, userRole, existingReviewId, isAnonymous);
     if (success) {
+      console.log("Review posted successfully, refreshing review list");
       setComment("");
       setRating(5);
       setIsAnonymous(false);
+      // Manually refresh the teacher reviews to ensure immediate update
+      setTimeout(() => refreshTeacherReviews(), 200);
     }
     return success;
   };
@@ -77,6 +82,9 @@ export default function App() {
 
   const handleBackToHome = () => {
     setCurrentView("home");
+    setSelectedTeacher(null);
+    // The teacherReviews will be automatically cleared by the useFirestoreData hook
+    // when currentTeacherId becomes null
   };
 
   const getTeacherAverageRating = (teacherId) => {

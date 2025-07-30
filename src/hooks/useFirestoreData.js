@@ -6,6 +6,7 @@ export const useFirestoreData = (user) => {
   const [teachers, setTeachers] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [teacherReviews, setTeacherReviews] = useState([]);
+  const [currentTeacherId, setCurrentTeacherId] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -63,22 +64,54 @@ export const useFirestoreData = (user) => {
     };
   }, [user]);
 
-  const fetchTeacherReviews = (teacherId) => {
+  // Separate effect for teacher reviews listener
+  useEffect(() => {
+    if (!user || !currentTeacherId) {
+      setTeacherReviews([]);
+      return;
+    }
+
+    console.log("Setting up teacher reviews listener for:", currentTeacherId);
+
     // Fetch both approved and pending reviews for teacher pages
     // Only exclude rejected reviews
     const reviewsQuery = query(
       collection(db, "reviews"),
-      where("teacherId", "==", teacherId),
+      where("teacherId", "==", currentTeacherId),
       where("status", "in", ["approved", "pending"])
     );
 
     const unsub = onSnapshot(reviewsQuery, (snapshot) => {
-      setTeacherReviews(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      );
+      const reviewsData = snapshot.docs.map((doc) => ({ 
+        id: doc.id, 
+        ...doc.data() 
+      }));
+      console.log(`Teacher reviews updated for ${currentTeacherId}:`, reviewsData.length, "reviews");
+      setTeacherReviews(reviewsData);
+    }, (error) => {
+      console.error("Error fetching teacher reviews:", error);
     });
 
-    return unsub;
+    return () => {
+      console.log("Cleaning up teacher reviews listener for:", currentTeacherId);
+      unsub();
+    };
+  }, [user, currentTeacherId]);
+
+  const fetchTeacherReviews = (teacherId) => {
+    console.log("Fetching reviews for teacher:", teacherId);
+    setCurrentTeacherId(teacherId);
+  };
+
+  const refreshTeacherReviews = () => {
+    if (currentTeacherId) {
+      console.log("Manually refreshing teacher reviews for:", currentTeacherId);
+      // Force refresh by re-setting the currentTeacherId which will trigger the useEffect
+      const teacherId = currentTeacherId;
+      setCurrentTeacherId(null);
+      // Use setTimeout to ensure the effect cleans up before setting the new value
+      setTimeout(() => setCurrentTeacherId(teacherId), 50);
+    }
   };
 
   return {
@@ -87,5 +120,6 @@ export const useFirestoreData = (user) => {
     teacherReviews,
     setTeacherReviews,
     fetchTeacherReviews,
+    refreshTeacherReviews,
   };
 };

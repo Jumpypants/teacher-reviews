@@ -81,7 +81,7 @@ export const postReview = async (user, selectedTeacher, comment, rating, userRol
     }
 
     // Create new review
-    await addDoc(collection(db, "reviews"), {
+    const reviewData = {
       reviewerId: user.uid,
       reviewerName: displayName,
       isAnonymous: isAnonymous,
@@ -90,8 +90,11 @@ export const postReview = async (user, selectedTeacher, comment, rating, userRol
       rating: rating,
       status: status,
       timestamp: new Date(),
-    });
-    console.log(`Review ${existingReviewId ? 'replaced' : 'submitted'} with status: ${status}`);
+    };
+    
+    console.log("Posting review with data:", reviewData);
+    await addDoc(collection(db, "reviews"), reviewData);
+    console.log(`Review ${existingReviewId ? 'replaced' : 'submitted'} with status: ${status} for teacher: ${selectedTeacher.id}`);
     return true;
   } catch (error) {
     console.error("Error posting review:", error);
