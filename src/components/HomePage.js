@@ -12,7 +12,8 @@ const HomePage = ({
   getAverageRating,
   onViewTeacher,
   onNavigateToAddTeacher,
-  onNavigateToAdmin
+  onNavigateToAdmin,
+  onSignOut
 }) => {
   const [filteredTeachers, setFilteredTeachers] = useState(teachers);
   const [searchQuery, setSearchQuery] = useState("");
@@ -60,6 +61,13 @@ const HomePage = ({
               )}
             </button>
           )}
+          <button 
+            onClick={onSignOut} 
+            className="btn-secondary"
+            style={{ marginLeft: "10px" }}
+          >
+            Sign Out
+          </button>
         </div>
       )}
 

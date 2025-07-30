@@ -18,7 +18,7 @@ import { getAverageRating } from "./utils/ratingUtils";
 import { submitTeacher, postReview } from "./utils/firebaseService";
 
 export default function App() {
-  const { user, userRole, loading, signIn } = useAuth();
+  const { user, userRole, loading, signIn, signOut } = useAuth();
   const { teachers, reviews, teacherReviews, fetchTeacherReviews, refreshTeacherReviews } = useFirestoreData(user);
   const { getUserReviewForTeacher } = useUserReviews(user);
   
@@ -105,6 +105,7 @@ export default function App() {
           onViewTeacher={handleViewTeacher}
           onNavigateToAddTeacher={handleNavigateToAddTeacher}
           onNavigateToAdmin={handleNavigateToAdmin}
+          onSignOut={signOut}
         />
       ) : currentView === "addTeacher" ? (
         <AddTeacherPage

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db, provider } from "../firebase";
 
@@ -55,5 +55,14 @@ export const useAuth = () => {
     }
   };
 
-  return { user, userRole, loading, signIn };
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log("Sign-out successful");
+    } catch (error) {
+      console.error("Sign-out error:", error);
+    }
+  };
+
+  return { user, userRole, loading, signIn, signOut: handleSignOut };
 };
