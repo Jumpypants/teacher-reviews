@@ -64,10 +64,12 @@ export const useFirestoreData = (user) => {
   }, [user]);
 
   const fetchTeacherReviews = (teacherId) => {
+    // Fetch both approved and pending reviews for teacher pages
+    // Only exclude rejected reviews
     const reviewsQuery = query(
       collection(db, "reviews"),
       where("teacherId", "==", teacherId),
-      where("status", "==", "approved")
+      where("status", "in", ["approved", "pending"])
     );
 
     const unsub = onSnapshot(reviewsQuery, (snapshot) => {

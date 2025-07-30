@@ -91,6 +91,14 @@ const TeacherPage = ({
   };
 
   const buttonInfo = getReviewButtonInfo();
+  
+  // Calculate review counts for display
+  const approvedReviews = teacherReviews.filter(r => r.status === "approved");
+  const pendingReviews = teacherReviews.filter(r => r.status === "pending");
+  const reviewCountText = pendingReviews.length > 0 
+    ? `(${approvedReviews.length} approved, ${pendingReviews.length} pending)`
+    : `(${teacherReviews.length} reviews)`;
+  
   return (
     <div>
       <button onClick={onBackToHome} className="back-button">
@@ -112,7 +120,7 @@ const TeacherPage = ({
                   ★ {getAverageRating(selectedTeacher.id) || "No ratings"}
                 </span>
                 <span className="review-count">
-                  ({teacherReviews.length} reviews)
+                  {reviewCountText}
                 </span>
               </div>
               {userRole === "admin" && (
